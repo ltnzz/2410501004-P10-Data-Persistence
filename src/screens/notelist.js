@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import * as SQLite from 'expo-sqlite';
+import { getDatabase } from '../database/migration';
 
 export default function NoteList({ onSelectNote, onCreateNote }) {
     const [notes, setNotes] = useState([]);
-    const [query, setQuery] = useState([]);
+    const [query, setQuery] = useState('');
 
     const loadNotes = async (search = '') => {
         try {
-            const db = await SQLite.openDatabaseAsync('app.db');
+            const db = getDatabase();
 
             let results = [];
 
@@ -40,12 +40,15 @@ export default function NoteList({ onSelectNote, onCreateNote }) {
     };
 
     useEffect(() => {
-        loadNotes();
-    }, []);
+        const timeout = setTimeout(() => {
+            loadNotes(query);
+        }, 300);
+
+        return () => clearTimeout(timeout);
+    }, [query]);
 
     const handleSearch = (text) => {
         setQuery(text);
-        loadNotes(text);
     };
 
     const renderItem = ({ item }) => (
@@ -66,7 +69,7 @@ export default function NoteList({ onSelectNote, onCreateNote }) {
                     {new Date(item.updated_at).toLocaleDateString('id-ID')}
                 </Text>
 
-                {item.is_synced === 0 && <Text style={styles.unsyncedBadge}>Belum tersinkron</Text>}
+                {!item.is_synced && <Text style={styles.unsyncedBadge}>Belum tersinkron</Text>}
             </View>
         </TouchableOpacity>
     );

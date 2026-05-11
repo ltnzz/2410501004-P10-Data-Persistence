@@ -25,15 +25,29 @@ async function runMigrations(db, fromVersion, toVersion) {
     }
 }
 
-export async function initDatabase() {
-    const db = await SQLite.openDatabaseAsync('app.db');
+let db = null;
 
-    const savedVersion = parseInt((await AsyncStorage.getItem('DB_VERSION')) || '0');
+export const initDatabase = async () => {
+    if (db) return db;
 
-    if (savedVersion < CURRENT_DB_VERSION) {
-        await runMigrations(db, savedVersion, CURRENT_DB_VERSION);
-        await AsyncStorage.setItem('DB_VERSION', String(CURRENT_DB_VERSION));
-    }
+    db = await SQLite.openDatabaseAsync(
+        'app.db'
+    );
+
+    await db.execAsync(`
+        CREATE TABLE IF NOT EXISTS notes (
+            id TEXT PRIMARY KEY NOT NULL,
+            title TEXT NOT NULL,
+            content TEXT DEFAULT '',
+            tags TEXT DEFAULT '[]',
+            color TEXT DEFAULT '#FFFFFF',
+            is_synced BOOLEAN DEFAULT FALSE,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+    `);
 
     return db;
-}
+};
+
+export const getDatabase = () => db;

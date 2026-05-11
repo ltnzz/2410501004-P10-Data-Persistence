@@ -45,8 +45,20 @@ export default function NoteEditor({ noteId, onSave, onCancel }) {
         const now = Date.now();
 
         if (noteId) {
+            const now = new Date().toISOString();
+
             db.runSync(
-                'UPDATE notes SET title = ?, content = ?, tags = ?, color = ?, updated_at = ?, is_synced = 0 WHERE id = ?',
+                `
+                UPDATE notes
+                SET
+                    title = ?,
+                    content = ?,
+                    tags = ?,
+                    color = ?,
+                    updated_at = ?,
+                    is_synced = false
+                WHERE id = ?
+                `,
                 [title.trim(), content.trim(), parsedTags, color, now, noteId],
             );
         } else {

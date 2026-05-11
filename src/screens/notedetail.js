@@ -4,8 +4,7 @@ import * as SQLite from 'expo-sqlite';
 const db = SQLite.openDatabaseSync('app.db');
 
 export default function NoteDetail({ noteId, onEdit, onBack }) {
-    const note = db.getFirstSync('SELECT title, content, tags, color, is_synced FROM notes WHERE id = ?', [noteId]);
-
+    const note = db.getFirstSync('SELECT id, title, content, tags, color, is_synced, created_at, updated_at FROM notes WHERE id = ?', [noteId]);
     if (!note) {
         return (
             <View style={styles.container}>
@@ -73,7 +72,7 @@ export default function NoteDetail({ noteId, onEdit, onBack }) {
                     Diperbarui: {new Date(note.updated_at).toLocaleString('id-ID')}
                 </Text>
                 <Text style={[styles.metaText, note.is_synced ? styles.synced : styles.unsynced]}>
-                    {note.is_synced ? '✅ Tersinkron' : '⏳ Belum tersinkron'}
+                    {note.is_synced ? 'Tersinkron' : 'Belum tersinkron'}
                 </Text>
             </View>
         </ScrollView>

@@ -5,9 +5,9 @@ export const CREATE_NOTES_TABLE = `
     content     TEXT    DEFAULT '',
     tags        TEXT    DEFAULT '[]',
     color       TEXT    DEFAULT '#FFFFFF',
-    is_synced   INTEGER DEFAULT 0,
-    created_at  INTEGER NOT NULL,
-    updated_at  INTEGER NOT NULL
+    is_synced   BOOLEAN DEFAULT FALSE,
+    created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   );
 `;
 
