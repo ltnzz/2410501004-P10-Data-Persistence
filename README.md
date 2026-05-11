@@ -9,7 +9,6 @@
 * **Nama**  : Latanza Akbar Fadilah
 * **NIM**   : 2410501004
 * **Kelas** : Pemrograman Mobile Lanjut - B
-* **Tema**  : Notesify (Offline Note Taking App)
 
 ---
 
@@ -67,36 +66,18 @@ Aplikasi ini dibangun menggunakan teknologi berikut:
 
 ---
 
-## Struktur Database
-
-```sql
-CREATE TABLE IF NOT EXISTS notes (
-    id TEXT PRIMARY KEY NOT NULL,
-    title TEXT NOT NULL,
-    content TEXT DEFAULT '',
-    tags TEXT DEFAULT '[]',
-    color TEXT DEFAULT '#FFFFFF',
-    is_synced BOOLEAN DEFAULT FALSE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-```
-
----
-
 ## Cara Run Project
 
 Pastikan sudah menginstall:
 
 * Node.js
 * Expo Go
-* Android Studio / Emulator (opsional)
 
 ### 1. Clone Repository
 
 ```bash
-git clone https://github.com/ltnzz/notesify-mobile
-cd notesify-mobile
+git clone https://github.com/ltnzz/2410501004-P10-Data-Persistence.git
+cd 2410501004-P10-Data-Persistence
 ```
 
 ### 2. Install Dependencies
