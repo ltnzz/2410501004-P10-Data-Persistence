@@ -1,0 +1,18 @@
+node_modules
+.next
+out
+build
+dist
+coverage
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# assets
+public
+*.svg
+*.png
+*.jpg
+
+# logs
+*.log
